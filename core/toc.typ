@@ -1,37 +1,5 @@
 #import "fonts.typ": *
 
-#let toc-entry-style() = {
-  // 自定义目录样式，包含点状填充
-  show outline.entry: it => {
-    let fill-dots = box(width: 1fr, repeat[.])
-    
-    if it.level == 1 {
-      // 章标题样式（4号宋体）
-      text(size: 14pt, font: fonts.song)[
-        #it.body
-        #fill-dots
-        #it.page
-      ]
-    } else if it.level == 2 {
-      // 节标题样式（4号宋体，缩进）
-      text(size: 14pt, font: fonts.song)[
-        #h(2em)#it.body
-        #fill-dots
-        #it.page
-      ]
-    } else if it.level == 3 {
-      // 小节标题样式（4号宋体，更多缩进）
-      text(size: 14pt, font: fonts.song)[
-        #h(4em)#it.body
-        #fill-dots
-        #it.page
-      ]
-    } else {
-      it
-    }
-  }
-}
-
 #let make-toc() = {
   set page(
     paper: "a4",
@@ -64,7 +32,24 @@
     // 设置行距为18磅
     #set par(leading: 18pt)
     
-    #toc-entry-style()
+    #show outline.entry: it => {
+      let lv = it.element.level
+
+      if lv == 1 {
+        let fill-dots = box(width: 1fr, repeat[.])
+        let body-text = it.element.body
+        let chinese = ("一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五")
+        let ch = counter(heading).at(it.element.location()).first()
+        set par(leading: 18pt, first-line-indent: 0em)
+        text(font: fonts.song)[
+          第#chinese.at(ch - 1)章 #body-text
+          #fill-dots
+          #counter(page).at(it.element.location()).first()
+        ]
+      } else {
+        it
+      }
+    }
     #outline(
       title: none,
       indent: auto
