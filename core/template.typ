@@ -171,7 +171,7 @@
 
   set figure(numbering: n => {
     let ch = counter(heading.where(level: 1)).get().first()
-    [#ch.#n]
+    [#(ch)-#(n)]
   })
   
   // 安全获取日期，提供默认值
