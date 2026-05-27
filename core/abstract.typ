@@ -31,7 +31,7 @@
     // 正文内容（小4号字体，1.5倍行距，两个字符缩进）
     #set par(first-line-indent: 2em)  // 首行缩进两个字符
     #if is-chinese [
-      #text(size: 12pt, font: fonts.song)[#content]
+      #text(size: 12pt, font: fonts.main + fonts.song)[#content]
     ] else [
       #text(size: 12pt)[#content]
     ]
@@ -42,12 +42,12 @@
     // 关键词（小4号字体，无缩进）
     #set par(first-line-indent: 0em)  // 关键词部分不缩进
     #if is-chinese [
-      #text(size: 12pt, weight: "bold", font: fonts.song)[#keywords-label：]
+      #text(size: 12pt, weight: "bold", font: fonts.main + fonts.song)[#keywords-label：]
     ] else [
       #text(size: 12pt, weight: "bold")[#keywords-label: ]
     ]
     #if is-chinese [
-      #text(size: 12pt, font: fonts.song)[#keywords.join("；")]  // 中文关键词用分号分隔
+      #text(size: 12pt, font: fonts.main + fonts.song)[#keywords.join("；")]  // 中文关键词用分号分隔
     ] else [
       #text(size: 12pt)[#keywords.join("; ")]  // 英文关键词用分号分隔
     ]

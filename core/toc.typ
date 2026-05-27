@@ -29,32 +29,15 @@
     // 目录标题与内容之间的间距
     #v(1.5em)
     
-    // 设置行距为18磅
-    #set par(leading: 18pt)
-    
-    #show outline.entry: it => {
-      let lv = it.element.level
+    // 设置行距为18磅，目录统一使用 Times New Roman + 宋体
+    #set par(leading: 18pt, first-line-indent: 0em)
+    #set text(font: fonts.main + fonts.song, size: 12pt)
 
-      if lv == 1 {
-        let fill-dots = box(width: 1fr, repeat[.])
-        let body-text = it.element.body
-        let chinese = ("一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五")
-        let ch = counter(heading).at(it.element.location()).first()
-        set par(leading: 18pt, first-line-indent: 0em)
-        text(font: fonts.song)[
-          第#chinese.at(ch - 1)章 #body-text
-          #fill-dots
-          #counter(page).at(it.element.location()).first()
-        ]
-      } else {
-        it
-      }
-    }
     #outline(
       title: none,
-      indent: auto
+      indent: 2em
     )
-    
+
     #pagebreak()
   ]
 }

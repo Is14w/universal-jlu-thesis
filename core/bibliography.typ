@@ -15,13 +15,7 @@
     footer-descent: 18pt,
   )
 
-  v(2em)
-
-  align(center)[
-    #text(size: 15pt, weight: "bold", font: fonts.hei)[
-      参考文献
-    ]
-  ]
+  heading(level: 1, numbering: none)[参考文献]
 
   v(1em)
 

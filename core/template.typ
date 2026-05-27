@@ -110,9 +110,16 @@
   show math.equation: set text(font: "Cambria Math")
   show math.equation: set block(above: 1.5em, below: 1.5em)
 
-  // 设置标题编号
-  set heading(numbering: "1.1.1.1")
-  
+  // 设置标题编号（一级用中文「第X章」，其余用阿拉伯数字）
+  let chinese-nums = ("一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五")
+  set heading(numbering: (..nums) => {
+    if nums.pos().len() == 1 {
+      [第#chinese-nums.at(nums.pos().first() - 1)章]
+    } else {
+      nums.pos().map(str).join(".")
+    }
+  })
+
   // 标题样式设置
   show heading.where(level: 1): it => {
     counter(figure).update(0)
@@ -120,9 +127,9 @@
     set par(first-line-indent: 0em)
     align(center)[
       #text(size: 16pt, weight: "bold", font: fonts.main + fonts.song)[
-        #if it.numbering != none {
-          [第 #counter(heading).display() 章 ]
-        }
+        #if it.numbering != none [
+          #counter(heading).display()
+        ]
         #it.body
       ]
     ]
@@ -254,14 +261,14 @@
     heading(level: 1, numbering: none)[结论]
     conclusion
   }
-  
+
   // 创新性成果
   if achievement != none {
     pagebreak()
     heading(level: 1, numbering: none)[在学期间发表的学术论文与研究成果]
     achievement
   }
-  
+
   // 致谢
   if acknowledgement != [] {
     pagebreak()
